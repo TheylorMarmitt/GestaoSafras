@@ -14,10 +14,9 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -42,8 +41,8 @@ public class FinalizarSafra extends VerticalLayout {
 	private FormLayout form = new FormLayout();
 	private ComboBox<Safra> safra = new ComboBox<Safra>();
 	private DatePicker dataColheita = new DatePicker();
-	private TextField qtdColhida = new TextField();
-	private TextField valorVenda = new TextField();
+	private NumberField qtdColhida = new NumberField();
+	private NumberField valorVenda = new NumberField();
 
 	private HorizontalLayout actions = new HorizontalLayout();
 	private Navegacao nav = new Navegacao();
@@ -68,12 +67,11 @@ public class FinalizarSafra extends VerticalLayout {
 		binder.forField(safra).asRequired("A seleção de safra é obrigatória").bind("safra");
 		binder.forField(dataColheita).asRequired("A data é obrigatoria").bind("dataColheita");
 		binder.forField(qtdColhida).asRequired("A quantidade colhida é obrigatório")
-			.withConverter(new StringToDoubleConverter("Quantidade deve ser um número"))
-			.withValidator(new DoubleRangeValidator("Quantidade deve ser de no min 1", 0.1, 100000.0))
-			.bind("qtdColhida");
+		.withValidator(new DoubleRangeValidator("A quantidade não é válida", 0.0, 9999999.0))
+		.bind("qtdColhida");
+		
 		binder.forField(valorVenda).asRequired("O valor de venda é obrigatório")
-		.withConverter(new StringToDoubleConverter("Valor deve ser um número"))
-		.withValidator(new DoubleRangeValidator("Valor deve ser de no min 1", 0.1, 1000000.0))
+		.withValidator(new DoubleRangeValidator("O valor não é válido", 0.0, 999999999.0))
 		.bind("valorVenda");
 		
 		binder.addStatusChangeListener(status ->{
@@ -121,6 +119,7 @@ public class FinalizarSafra extends VerticalLayout {
 
 		qtdColhida.setPlaceholder("em sacas");
 		qtdColhida.setValueChangeMode(ValueChangeMode.EAGER);
+		
 		valorVenda.setPlaceholder("R$ por saca");
 		valorVenda.setValueChangeMode(ValueChangeMode.EAGER);
 		finalizar.setThemeName("primary");

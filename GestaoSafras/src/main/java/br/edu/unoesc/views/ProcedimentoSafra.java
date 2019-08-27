@@ -15,11 +15,11 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
-import com.vaadin.flow.data.converter.StringToDoubleConverter;
 import com.vaadin.flow.data.validator.DoubleRangeValidator;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
@@ -46,8 +46,8 @@ public class ProcedimentoSafra extends VerticalLayout {
 	private TextField descricao = new TextField();
 	private TextField tipo = new TextField();
 	private DatePicker dataP = new DatePicker();
-	private TextField quantidade = new TextField();
-	private TextField valor = new TextField();
+	private NumberField quantidade = new NumberField();
+	private NumberField valor = new NumberField();
 	private TextArea obs = new TextArea();
 	private HorizontalLayout actions = new HorizontalLayout();
 
@@ -79,13 +79,13 @@ public class ProcedimentoSafra extends VerticalLayout {
 		binder.forField(dataP).asRequired("A data é obrigatória").bind("data");
 		
 		binder.forField(quantidade).asRequired("A quantidade do produto é obrigatório")
-			.withConverter(new StringToDoubleConverter("Quantidade deve ser um número"))
-			.withValidator(new DoubleRangeValidator("Quantidade deve ser de no min 1", 0.1, 1000000.0))
-			.bind("quantidade");
+		.withValidator(new DoubleRangeValidator("A quantidade não é válida", 0.0, 9999999.0))
+		.bind("quantidade");
 		
 		binder.forField(valor).asRequired("O valor gasto é obrigatório")
-		.withConverter(new StringToDoubleConverter("Valor deve ser um número"))
+		.withValidator(new DoubleRangeValidator("O valor não é válida", 0.0, 999999999.0))
 		.bind("valorGasto");
+		
 		binder.forField(obs).bind("observacao");
 		
 		binder.addStatusChangeListener(status ->{
@@ -140,7 +140,7 @@ public class ProcedimentoSafra extends VerticalLayout {
 
 		quantidade.setPlaceholder("Produto aplicado");
 		quantidade.setValueChangeMode(ValueChangeMode.EAGER);
-
+		
 		valor.setPlaceholder("Gasto do procedimento");
 		valor.setValueChangeMode(ValueChangeMode.EAGER);
 
