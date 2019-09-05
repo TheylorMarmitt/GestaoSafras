@@ -68,7 +68,7 @@ public class AdicionarSafra extends VerticalLayout {
 	}
 
 	public void criar() {
-		descricao.setPlaceholder("");
+		descricao.setPlaceholder("Propriedade, Local, Condição");
 		descricao.setAutofocus(true);
 		descricao.setValueChangeMode(ValueChangeMode.EAGER);
 		

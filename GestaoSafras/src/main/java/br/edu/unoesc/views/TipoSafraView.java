@@ -130,7 +130,9 @@ public class TipoSafraView extends VerticalLayout {
 		button.addClickListener(e -> {
 			Dialog dialog = new DialogDecisao().excluir(grid, item, this.repository);
 			dialog.open();
-		});		
+		});
+		button.getStyle().set("color", "#fff");
+		button.getStyle().set("background-color", "#e60000");
 		return button;
 	}
 

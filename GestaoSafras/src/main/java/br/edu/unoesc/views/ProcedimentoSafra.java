@@ -131,7 +131,8 @@ public class ProcedimentoSafra extends VerticalLayout {
 		safra.setAutofocus(true);
 		
 		descricao.setValueChangeMode(ValueChangeMode.EAGER);
-
+		descricao.setPlaceholder("Ex: Pulverização");
+		
 		tipo.setPlaceholder("Ex: inseticida");
 		tipo.setValueChangeMode(ValueChangeMode.EAGER);
 
