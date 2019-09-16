@@ -33,6 +33,7 @@ import br.edu.unoesc.model.Procedimento;
 import br.edu.unoesc.model.Safra;
 import br.edu.unoesc.repositories.ProcedimentoRepository;
 import br.edu.unoesc.repositories.SafraRepository;
+import br.edu.unoesc.security.SecurityUtils;
 
 @PageTitle("Gestão de Safra")
 @Route("procedimento")
@@ -64,7 +65,7 @@ public class ProcedimentoSafra extends VerticalLayout {
 		this.safraRepository = safraRepository;
 		
 		criar();
-		safra.setItems(this.safraRepository.findByEmAtividadeTrue());
+		safra.setItems(this.safraRepository.findByEmAtividade(SecurityUtils.getUsuarioLogado().getCodigo()));
 		binder();
 		
 		add(nav.menu(4),new H2("Realizar Procedimento"), form, actions);
@@ -132,7 +133,7 @@ public class ProcedimentoSafra extends VerticalLayout {
 		
 		descricao.setValueChangeMode(ValueChangeMode.EAGER);
 		descricao.setPlaceholder("Ex: Pulverização");
-		
+
 		tipo.setPlaceholder("Ex: inseticida");
 		tipo.setValueChangeMode(ValueChangeMode.EAGER);
 

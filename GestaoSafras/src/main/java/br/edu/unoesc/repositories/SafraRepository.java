@@ -20,5 +20,6 @@ public interface SafraRepository extends JpaRepository<Safra, Long> {
 			+ "c.dataColheita = (select max(co.dataColheita) from Colheita co where c.codigo = co.codigo)")
 	Safra findLastColhida(Long codUsuario);
 	
-	List<Safra> findByEmAtividadeTrue();
+	@Query("select s from Safra s where s.emAtividade = true and s.usuario.codigo = :codigo")
+	List<Safra> findByEmAtividade(long codigo);
 }

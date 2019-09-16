@@ -14,7 +14,7 @@ public interface ColheitaRepository extends JpaRepository<Colheita, Long>  {
 
 	
 	@Query("select c from Colheita c where c.safra.usuario.codigo = ?1 and "
-			+ "c.dataColheita = (select max(co.dataColheita) from Colheita co)")
+			+ "c.dataColheita = (select max(co.dataColheita) from Colheita co where co.safra.usuario.codigo = ?1)")
 	Colheita findLastColheita(Long codigo);
 	
 	Colheita findByCodigo(Long codigo);

@@ -30,6 +30,7 @@ import br.edu.unoesc.model.Colheita;
 import br.edu.unoesc.model.Safra;
 import br.edu.unoesc.repositories.ColheitaRepository;
 import br.edu.unoesc.repositories.SafraRepository;
+import br.edu.unoesc.security.SecurityUtils;
 
 @PageTitle("Gestão de Safra")
 @Route("finalizar")
@@ -125,7 +126,7 @@ public class FinalizarSafra extends VerticalLayout {
 		finalizar.setThemeName("primary");
 		descricaoForm();
 		
-		safra.setItems(this.safraRepository.findByEmAtividadeTrue());
+		safra.setItems(this.safraRepository.findByEmAtividade(SecurityUtils.getUsuarioLogado().getCodigo()));
 		actions.add(finalizar);
 	}
 

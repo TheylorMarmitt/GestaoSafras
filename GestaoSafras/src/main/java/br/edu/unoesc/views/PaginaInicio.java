@@ -54,13 +54,15 @@ public class PaginaInicio extends VerticalLayout{
 		Div grafico = new Div();
 		grafico.setWidthFull();
 		
+		System.out.println(SecurityUtils.getUsuarioLogado().getCodigo());
 		Colheita ultima = this.colheitaRepository.findLastColheita(SecurityUtils.getUsuarioLogado().getCodigo());
+		
 		if(ultima == null) {
 			add(nav.menu(1), 
 					new H2("Nenhuma safra finalizada"),
 					new H5("Finalize uma safra para ter seus detalhes e gráfico"));
 		}else {
-			comboColheita.setItems(this.colheitaRepository.findAll());
+			comboColheita.setItems(this.colheitaRepository.findColheitas(SecurityUtils.getUsuarioLogado().getCodigo()));
 			comboColheita.setLabel("Colheita");
 			comboColheita.setWidth("250px");
 			comboColheita.setValue(ultima);
