@@ -26,8 +26,7 @@ import br.edu.unoesc.componentes.DialogDecisao;
 import br.edu.unoesc.componentes.DialogMensagem;
 import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.model.TipoSafra;
-import br.edu.unoesc.repositories.TipoSafraRepository;
-import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.TipoSafraService;
 
 @PageTitle("Gestão de Safra")
 @Route("tipo-safra")
@@ -49,11 +48,11 @@ public class TipoSafraView extends VerticalLayout {
 	private boolean editando = false;
 	
 	// repository
-	private TipoSafraRepository repository;
+	private TipoSafraService tipoService;
 
 	@Autowired
-	public TipoSafraView(TipoSafraRepository repository) {
-		this.repository = repository;
+	public TipoSafraView(TipoSafraService tipoService) {
+		this.tipoService = tipoService;
 		criar();
 		binder();
 		add(nav.menu(2), new H2("Tipo de Safra"), form, actions, grid);
@@ -99,17 +98,13 @@ public class TipoSafraView extends VerticalLayout {
 	private void salvar(TipoSafra tipoSalvo) {
 		if (editando) {
 			this.tiposafra.setNome(tipoSalvo.getNome());
-			this.repository.saveAndFlush(this.tiposafra);
-			grid.setItems(this.repository.findByAtivos(tiposafra.getUsuario().getCodigo()));
+			this.tipoService.atualizar(this.tiposafra);
+			grid.setItems(this.tipoService.tiposAtivos());
 		} else {
-			TipoSafra tipo = new TipoSafra();
-			tipo.setNome(nome.getValue());
-			tipo.setAtivo(true);
-			tipo.setUsuario(SecurityUtils.getUsuarioLogado().getUsuario());
-			this.repository.saveAndFlush(tipo);
+			this.tipoService.salvar(nome.getValue());
 			Dialog sucesso = new DialogMensagem().sucesso("Tipo salvo com sucesso");
 			sucesso.open();
-			grid.setItems(this.repository.findByAtivos(tipo.getUsuario().getCodigo()));
+			grid.setItems(this.tipoService.tiposAtivos());
 			nome.clear();
 		}
 		editando = false; 
@@ -128,7 +123,7 @@ public class TipoSafraView extends VerticalLayout {
 	private Button createRemoveButton(Grid<TipoSafra> grid, TipoSafra item) {
 		Button button = new Botoes().excluir();
 		button.addClickListener(e -> {
-			Dialog dialog = new DialogDecisao().excluir(grid, item, this.repository);
+			Dialog dialog = new DialogDecisao().excluir(grid, item, this.tipoService);
 			dialog.open();
 		});
 		button.getStyle().set("color", "#fff");
@@ -147,7 +142,7 @@ public class TipoSafraView extends VerticalLayout {
 				new ResponsiveStep("720px", 3),
 				new ResponsiveStep("940px", 4));
 		
-		grid.setItems(this.repository.findByAtivos(SecurityUtils.getUsuarioLogado().getCodigo()));
+		grid.setItems(this.tipoService.tiposAtivos());
 		grid.addColumn(TipoSafra::getCodigo).setHeader("Código");
 		grid.addColumn(TipoSafra::getNome).setHeader("Nome");
 		grid.addComponentColumn(item -> createEditButton(grid, item)).setHeader("Editar Item");

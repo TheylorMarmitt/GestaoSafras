@@ -7,14 +7,13 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 
 import br.edu.unoesc.model.TipoSafra;
-import br.edu.unoesc.repositories.TipoSafraRepository;
-import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.TipoSafraService;
 
 public class DialogDecisao {
 	
 	Dialog dialog = new Dialog();
 	
-	public Dialog excluir(Grid<TipoSafra> grid, TipoSafra tipo, TipoSafraRepository repository) {
+	public Dialog excluir(Grid<TipoSafra> grid, TipoSafra tipo, TipoSafraService service) {
 		dialog.setWidth("300px");
 		dialog.setHeight("100px");
 		
@@ -46,9 +45,8 @@ public class DialogDecisao {
 		});
 		
 		sim.addClickListener(e ->{
-			tipo.setAtivo(false);
-			repository.saveAndFlush(tipo);
-			grid.setItems(repository.findByAtivos(SecurityUtils.getUsuarioLogado().getCodigo()));
+			service.desativando(tipo);
+			grid.setItems(service.tiposAtivos());
 			dialog.close();
 		});
 		

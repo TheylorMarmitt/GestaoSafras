@@ -1,7 +1,6 @@
 package br.edu.unoesc.views;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -26,8 +25,8 @@ import br.edu.unoesc.componentes.DialogMensagem;
 import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Usuario;
-import br.edu.unoesc.repositories.UsuarioRepository;
 import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.UsuarioService;
 
 @PageTitle("Gestão de Safra")
 @Route("editar-usuario")
@@ -48,11 +47,11 @@ public class EditarUsuario extends VerticalLayout{
 	private Button salvar = new Botoes().salvar();
 
 	
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 	
 	@Autowired
-	public EditarUsuario( UsuarioRepository usuarioRepository){
-		this.usuarioRepository = usuarioRepository;
+	public EditarUsuario( UsuarioService usuarioService){
+		this.usuarioService = usuarioService;
 		
 		criar();
 		binder();
@@ -102,7 +101,7 @@ public class EditarUsuario extends VerticalLayout{
 		
 		salvar.addClickListener(e ->{
 			if(senha.isEmpty() || senha.getValue().contentEquals(confirmacaoSenha.getValue())) {
-				if(this.usuarioRepository.findByEmail(email.getValue()) == null ||
+				if(this.usuarioService.buscaPorEmail(email.getValue()) == null ||
 						SecurityUtils.getUsuarioLogado().getUsuario().getEmail() == email.getValue()) {
 					try {
 						Usuario usuarioSalvo = SecurityUtils.getUsuarioLogado().getUsuario();
@@ -133,10 +132,8 @@ public class EditarUsuario extends VerticalLayout{
 	}
 	
 	private void salvar(Usuario user) {
-		SecurityUtils.getUsuarioLogado().getUsuario().setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
-		
-		this.usuarioRepository.saveAndFlush(SecurityUtils.getUsuarioLogado().getUsuario());
-		Dialog dialog = new DialogMensagem().sucesso("Usuário Editado com sucesso");
+		this.usuarioService.salvaAposEdicao(user);
+		Dialog dialog = new DialogMensagem().sucesso("Usuário editado com sucesso");
 		dialog.open();
 	}
 	

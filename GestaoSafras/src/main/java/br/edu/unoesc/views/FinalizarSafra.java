@@ -28,9 +28,8 @@ import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Colheita;
 import br.edu.unoesc.model.Safra;
-import br.edu.unoesc.repositories.ColheitaRepository;
-import br.edu.unoesc.repositories.SafraRepository;
-import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.ColheitaService;
+import br.edu.unoesc.service.SafraService;
 
 @PageTitle("Gestão de Safra")
 @Route("finalizar")
@@ -50,13 +49,13 @@ public class FinalizarSafra extends VerticalLayout {
 	private Button limpar = new Botoes().limparCampos();
 	private Button finalizar = new Button("Finalizar");
 	
-	private ColheitaRepository repository;
-	private SafraRepository safraRepository;
+	private ColheitaService colheitaService;
+	private SafraService safraService;
 	
 	@Autowired
-	public FinalizarSafra(ColheitaRepository repository, SafraRepository safraRepository) {
-		this.repository = repository;
-		this.safraRepository = safraRepository;
+	public FinalizarSafra(ColheitaService colheitaService, SafraService safraService) {
+		this.colheitaService = colheitaService;
+		this.safraService = safraService;
 		criar();
 		binder();
 		add(nav.menu(5), new H2("Finalizar Safra"), form, actions);
@@ -107,10 +106,7 @@ public class FinalizarSafra extends VerticalLayout {
 	}
 
 	private void salvar(Colheita colheitaSalvo) {
-		Safra safra = colheitaSalvo.getSafra();
-		safra.setEmAtividade(false);
-		this.repository.save(colheitaSalvo);
-		this.safraRepository.save(safra);
+		this.colheitaService.salvar(colheitaSalvo);
 	}
 
 	private void criar() {
@@ -126,7 +122,7 @@ public class FinalizarSafra extends VerticalLayout {
 		finalizar.setThemeName("primary");
 		descricaoForm();
 		
-		safra.setItems(this.safraRepository.findByEmAtividade(SecurityUtils.getUsuarioLogado().getCodigo()));
+		safra.setItems(this.safraService.todasEmAtividade());
 		actions.add(finalizar);
 	}
 

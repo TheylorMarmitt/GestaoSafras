@@ -18,8 +18,7 @@ import br.edu.unoesc.componentes.Botoes;
 import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Colheita;
-import br.edu.unoesc.repositories.ColheitaRepository;
-import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.ColheitaService;
 
 @PageTitle("Gestão de Safra")
 @Route("historico")
@@ -36,11 +35,11 @@ public class Historico extends VerticalLayout {
 	private Navegacao nav = new Navegacao();
 	private Button filtra = new Botoes().filtrar(); 
 
-	private ColheitaRepository repository;
+	private ColheitaService colheitaService;
 	
 	@Autowired
-	public Historico(ColheitaRepository repository) {
-		this.repository = repository;
+	public Historico(ColheitaService colheitaService) {
+		this.colheitaService = colheitaService;
 
 		criarGrid();
 		criarForm();
@@ -52,18 +51,15 @@ public class Historico extends VerticalLayout {
 		filtra.addClickListener(e -> {
 			if(tipo.isEmpty()) {
 				if(dataInicio.isEmpty() && dataFim.isEmpty()) {
-					grid.setItems(this.repository.findColheitas(SecurityUtils.getUsuarioLogado().getCodigo()));
+					grid.setItems(this.colheitaService.colheitasPorUsuario());
 				}else {
-					grid.setItems(this.repository.findColheitasEntreDatas(SecurityUtils.getUsuarioLogado().getCodigo(), 
-							dataInicio.getValue(), dataFim.getValue()));
+					grid.setItems(this.colheitaService.colheitasEntreDatas(dataInicio.getValue(), dataFim.getValue()));
 				}
 			}else {
 				if(dataInicio.isEmpty() && dataFim.isEmpty()) {
-					grid.setItems(this.repository.findColheitasPorTipo(SecurityUtils.getUsuarioLogado().getCodigo(), 
-							tipo.getValue()));
+					grid.setItems(this.colheitaService.colheitasPorTipo(tipo.getValue()));
 				}else {
-					grid.setItems(this.repository.findColheitasFiltradas(SecurityUtils.getUsuarioLogado().getCodigo(), 
-							tipo.getValue(), dataInicio.getValue(), dataFim.getValue()));
+					grid.setItems(this.colheitaService.colheitasEntreDatasComTipo(dataInicio.getValue(), dataFim.getValue(), tipo.getValue()));
 				}
 			}
 		});		
@@ -89,7 +85,7 @@ public class Historico extends VerticalLayout {
 	}
 
 	private void criarGrid() {
-		grid.setItems(this.repository.findColheitas(SecurityUtils.getUsuarioLogado().getCodigo()));
+		grid.setItems(this.colheitaService.colheitasPorUsuario());
 		grid.addColumn(Colheita::tipo).setHeader("Tipo");
 		grid.addColumn(Colheita::dataFormatada).setHeader("Data da colheita");
 		grid.addColumn(Colheita::getQtdColhida).setHeader("Quantidade colhida");

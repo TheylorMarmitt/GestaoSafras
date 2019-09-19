@@ -31,8 +31,7 @@ import com.vaadin.flow.router.Route;
 import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.model.Colheita;
 import br.edu.unoesc.model.Procedimento;
-import br.edu.unoesc.repositories.ColheitaRepository;
-import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.ColheitaService;
 
 @PageTitle("Gestão de Safra")
 @Route("inicio")
@@ -44,24 +43,24 @@ public class PaginaInicio extends VerticalLayout{
 	private ComboBox<Colheita> comboColheita = new ComboBox<Colheita>(); 
 	private Navegacao nav = new Navegacao();
 	
-	private ColheitaRepository colheitaRepository;
+	private ColheitaService colheitaService;
 	
 	@Autowired
-	public PaginaInicio(ColheitaRepository colheitaRepository) {
+	public PaginaInicio(ColheitaService colheitaService) {
 		
-		this.colheitaRepository = colheitaRepository;
+		this.colheitaService = colheitaService;
 		
 		Div grafico = new Div();
 		grafico.setWidthFull();
 		
-		Colheita ultima = this.colheitaRepository.findLastColheita(SecurityUtils.getUsuarioLogado().getCodigo());
+		Colheita ultima = colheitaService.ultimaColheita();
 		
 		if(ultima == null) {
 			add(nav.menu(1), 
 					new H2("Nenhuma safra finalizada"),
 					new H5("Finalize uma safra para ter seus detalhes e gráfico"));
 		}else {
-			comboColheita.setItems(this.colheitaRepository.findColheitas(SecurityUtils.getUsuarioLogado().getCodigo()));
+			comboColheita.setItems(this.colheitaService.colheitas());
 			comboColheita.setLabel("Colheita");
 			comboColheita.setWidth("250px");
 			comboColheita.setValue(ultima);

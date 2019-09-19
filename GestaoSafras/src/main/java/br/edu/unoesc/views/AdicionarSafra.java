@@ -30,9 +30,8 @@ import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Safra;
 import br.edu.unoesc.model.TipoSafra;
-import br.edu.unoesc.repositories.SafraRepository;
-import br.edu.unoesc.repositories.TipoSafraRepository;
-import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.SafraService;
+import br.edu.unoesc.service.TipoSafraService;
 
 @PageTitle("Gestão de Safra")
 @Route("adicionar-safra")
@@ -53,13 +52,13 @@ public class AdicionarSafra extends VerticalLayout {
 	private Button salvar = new Botoes().salvar();
 	private Navegacao nav = new Navegacao();
 	
-	private SafraRepository repository;
-	private TipoSafraRepository tipoRepository;
+	private SafraService safraService;
+	private TipoSafraService tipoService;
 	
 	@Autowired
-	public AdicionarSafra(SafraRepository repository, TipoSafraRepository tipoRepository) {
-		this.repository = repository;
-		this.tipoRepository = tipoRepository;
+	public AdicionarSafra(SafraService safraService, TipoSafraService tipoService) {
+		this.safraService = safraService;
+		this.tipoService = tipoService;
 		
 		criar();
 		binder();
@@ -75,7 +74,7 @@ public class AdicionarSafra extends VerticalLayout {
 		data.setPlaceholder("Início da safra");
 		data.setI18n(new DataPickerPt().dataPt());
 
-		tipo.setItems(this.tipoRepository.findByAtivos(SecurityUtils.getUsuarioLogado().getCodigo()));
+		tipo.setItems(this.tipoService.tiposAtivos());
 		
 		tamanhoPlantacao.setPlaceholder("Hectares");
 		tamanhoPlantacao.setValueChangeMode(ValueChangeMode.EAGER);
@@ -134,9 +133,7 @@ public class AdicionarSafra extends VerticalLayout {
 	}
 	
 	private void salvar(Safra safraSalvo) {
-		safraSalvo.setEmAtividade(true);
-		safraSalvo.setUsuario(SecurityUtils.getUsuarioLogado().getUsuario());
-		this.repository.save(safraSalvo); 
+		this.safraService.salvar(safraSalvo); 
 	}
 	
 	private void descricaoForm() {

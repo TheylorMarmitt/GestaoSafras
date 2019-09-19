@@ -3,7 +3,6 @@ package br.edu.unoesc.views;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
@@ -23,9 +22,8 @@ import com.vaadin.flow.router.Route;
 import br.edu.unoesc.componentes.Botoes;
 import br.edu.unoesc.componentes.DialogMensagem;
 import br.edu.unoesc.componentes.DivRecuperarSenha;
-//import br.edu.unoesc.contatoemail.EmailUtil;
 import br.edu.unoesc.model.Usuario;
-import br.edu.unoesc.repositories.UsuarioRepository;
+import br.edu.unoesc.service.UsuarioService;
 
 @PageTitle("Gestão de Safra")
 @Route("recuperar-senha")
@@ -39,11 +37,11 @@ public class RecuperarSenha extends VerticalLayout{
 	private Button recuperar = new Botoes().recuperar();
 	private Button voltar = new Botoes().voltar();
 	
-	private UsuarioRepository repository;
+	private UsuarioService usuarioService;
 	
 	@Autowired
-	public RecuperarSenha(UsuarioRepository repository) {
-		this.repository = repository;
+	public RecuperarSenha(UsuarioService usuarioService) {
+		this.usuarioService = usuarioService;
 		
 		setSizeUndefined();
 		getStyle().set("padding", "0px");
@@ -104,14 +102,12 @@ public class RecuperarSenha extends VerticalLayout{
 	}
 
 	private void verificaEmail(Usuario usuarioSalvo) {
-		Usuario user = this.repository.findByEmail(usuarioSalvo.getEmail());
+		Usuario user = this.usuarioService.buscaPorEmail(usuarioSalvo.getEmail());
 		if(user == null) {
 			Dialog dialog = new DialogMensagem().erroMensagem("E-mail inválido", "Informe seu e-mail de login") ;
 			dialog.open();
 		}else {
-			String senha = enviaEmail(usuarioSalvo.getEmail());
-			user.setSenha(new BCryptPasswordEncoder().encode(senha));
-			this.repository.saveAndFlush(user);
+			this.usuarioService.atualizar(usuarioSalvo);
 			recuperar.getUI().ifPresent(ui -> ui.navigate("login"));
 		}
 	}
@@ -129,13 +125,4 @@ public class RecuperarSenha extends VerticalLayout{
 		form.add(email);
 	}
 	
-	private String enviaEmail(String email) {
-		try {
-//			return EmailUtil.enviarEmail(email);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 }

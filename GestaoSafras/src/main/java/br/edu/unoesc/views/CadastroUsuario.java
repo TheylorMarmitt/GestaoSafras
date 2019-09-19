@@ -3,7 +3,6 @@ package br.edu.unoesc.views;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
@@ -28,7 +27,7 @@ import br.edu.unoesc.componentes.Botoes;
 import br.edu.unoesc.componentes.DialogMensagem;
 import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Usuario;
-import br.edu.unoesc.repositories.UsuarioRepository;
+import br.edu.unoesc.service.UsuarioService;
 
 @PageTitle("Gestão de Safra")
 @Route("cadastrar-usuario")
@@ -50,11 +49,11 @@ public class CadastroUsuario extends VerticalLayout{
 	private Button salvar = new Botoes().salvar();
 	private Button voltar = new Botoes().voltar();
 
-	private UsuarioRepository usuarioRepository;
+	private UsuarioService usuarioService;
 	
 	@Autowired
-	public CadastroUsuario(UsuarioRepository usuarioRepository){
-		this.usuarioRepository = usuarioRepository;
+	public CadastroUsuario(UsuarioService usuarioService){
+		this.usuarioService = usuarioService;
 		
 		add(new H2("Cadastro de Usuário"));
 		
@@ -123,7 +122,7 @@ public class CadastroUsuario extends VerticalLayout{
 		
 		salvar.addClickListener(e ->{
 			if(senha.isEmpty() || senha.getValue().contentEquals(confirmacaoSenha.getValue())) {
-				if(this.usuarioRepository.findByEmail(email.getValue()) == null) {
+				if(this.usuarioService.buscaPorEmail(email.getValue()) == null) {
 					try {
 						Usuario usuarioSalvo = new Usuario();
 						binder.writeBean(usuarioSalvo);
@@ -142,13 +141,13 @@ public class CadastroUsuario extends VerticalLayout{
 					}
 				}else {
 					Dialog dialog = new DialogMensagem().erroMensagem("E-mail Inválido",
-							"e-mail já cadastrado, tente fazer o login");
+							"E-mail já cadastrado, tente fazer o login");
 					dialog.open();
 				}
 				
 			}else {
 				Dialog dialog = new DialogMensagem().erroMensagem("Senhas incompatíveis",
-						"a senha e a confirmação devem ser iguais");
+						"A senha e a confirmação devem ser iguais");
 				dialog.open();
 			}
 		});
@@ -160,8 +159,7 @@ public class CadastroUsuario extends VerticalLayout{
 	}
 	
 	private void salvar(Usuario user) {
-		user.setSenha(new BCryptPasswordEncoder().encode(user.getSenha()));
-		this.usuarioRepository.save(user);
+		this.usuarioService.salvar(user);
 		salvar.getUI().ifPresent(ui -> ui.navigate("login"));
 	}
 

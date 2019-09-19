@@ -1,6 +1,5 @@
 package br.edu.unoesc.views;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.vaadin.flow.component.button.Button;
@@ -18,7 +17,7 @@ import com.vaadin.flow.router.Route;
 import br.edu.unoesc.componentes.Botoes;
 import br.edu.unoesc.model.Colheita;
 import br.edu.unoesc.model.Procedimento;
-import br.edu.unoesc.repositories.ColheitaRepository;
+import br.edu.unoesc.service.ColheitaService;
 
 @PageTitle("Gestão de Safra")
 @Route("historico-procedimentos")
@@ -29,13 +28,13 @@ public class HistoricoProcedimentos extends VerticalLayout  implements HasUrlPar
 
 	private Grid<Procedimento> grid = new Grid<>();
 	private Button voltar = new Botoes().voltar();
-	private ColheitaRepository repository;
 	
+	private ColheitaService colheitaService;
 	private Colheita colheita;
 	
 	@Autowired
-	public HistoricoProcedimentos(ColheitaRepository repository){
-		this.repository = repository;
+	public HistoricoProcedimentos(ColheitaService colheitaService){
+		this.colheitaService = colheitaService;
 	}
 	
 	private void criar() {
@@ -70,7 +69,7 @@ public class HistoricoProcedimentos extends VerticalLayout  implements HasUrlPar
 
 	@Override
 	public void setParameter(BeforeEvent event, Long parameter) {
-		this.colheita = this.repository.findByCodigo(parameter);
+		this.colheita = this.colheitaService.buscarPorCodigo(parameter);
 		criar();
 		add(new H2("Procedimentos por safra"), grid, mostrarTotal(), voltar);
 	}

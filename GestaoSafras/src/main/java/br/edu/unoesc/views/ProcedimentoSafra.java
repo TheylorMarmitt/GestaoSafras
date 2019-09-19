@@ -31,9 +31,8 @@ import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Procedimento;
 import br.edu.unoesc.model.Safra;
-import br.edu.unoesc.repositories.ProcedimentoRepository;
-import br.edu.unoesc.repositories.SafraRepository;
-import br.edu.unoesc.security.SecurityUtils;
+import br.edu.unoesc.service.ProcedimentoService;
+import br.edu.unoesc.service.SafraService;
 
 @PageTitle("Gestão de Safra")
 @Route("procedimento")
@@ -56,16 +55,16 @@ public class ProcedimentoSafra extends VerticalLayout {
 	private Button limpar = new Botoes().limparCampos();
 	private Navegacao nav = new Navegacao();
 
-	private ProcedimentoRepository repository;
-	private SafraRepository safraRepository;
-
+	private ProcedimentoService procedService;
+	private SafraService safraService;
+	
 	@Autowired
-	public ProcedimentoSafra(ProcedimentoRepository repository, SafraRepository safraRepository) {
-		this.repository = repository;
-		this.safraRepository = safraRepository;
+	public ProcedimentoSafra(ProcedimentoService procedService, SafraService safraService) {
+		this.procedService = procedService;
+		this.safraService = safraService;
 		
 		criar();
-		safra.setItems(this.safraRepository.findByEmAtividade(SecurityUtils.getUsuarioLogado().getCodigo()));
+		safra.setItems(this.safraService.todasEmAtividade());
 		binder();
 		
 		add(nav.menu(4),new H2("Realizar Procedimento"), form, actions);
@@ -121,10 +120,7 @@ public class ProcedimentoSafra extends VerticalLayout {
 	}
 
 	private void salvar(Procedimento procedimentoSalvo) {
-		this.repository.saveAndFlush(procedimentoSalvo);
-		Safra safra = procedimentoSalvo.getSafra();
-		safra.adicionaProcedimento(procedimentoSalvo);
-		this.safraRepository.saveAndFlush(safra);
+		this.procedService.salvar(procedimentoSalvo);
 	}
 
 	private void criar() {
