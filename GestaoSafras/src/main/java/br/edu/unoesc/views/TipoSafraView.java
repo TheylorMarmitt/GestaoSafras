@@ -47,7 +47,6 @@ public class TipoSafraView extends VerticalLayout {
 	private TipoSafra tiposafra;
 	private boolean editando = false;
 	
-	// repository
 	private TipoSafraService tipoService;
 
 	@Autowired
