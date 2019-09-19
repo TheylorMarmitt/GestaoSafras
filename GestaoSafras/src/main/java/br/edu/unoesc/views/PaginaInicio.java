@@ -54,7 +54,6 @@ public class PaginaInicio extends VerticalLayout{
 		Div grafico = new Div();
 		grafico.setWidthFull();
 		
-		System.out.println(SecurityUtils.getUsuarioLogado().getCodigo());
 		Colheita ultima = this.colheitaRepository.findLastColheita(SecurityUtils.getUsuarioLogado().getCodigo());
 		
 		if(ultima == null) {
