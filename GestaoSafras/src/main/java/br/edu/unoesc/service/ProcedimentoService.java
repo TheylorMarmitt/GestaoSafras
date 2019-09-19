@@ -18,7 +18,6 @@ public class ProcedimentoService {
 	@Autowired
 	private SafraRepository safraRepository;
 	
-	@Transactional
 	public void salvar(Procedimento procedimento) {
 		Safra safra = procedimento.getSafra();
 		safra.adicionaProcedimento(procedimento);

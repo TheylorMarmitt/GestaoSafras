@@ -32,7 +32,6 @@ public class ColheitaService {
 		return colheitas;
 	}
 	
-	@Transactional
 	public void salvar(Colheita colheita) {
 		Safra safra = colheita.getSafra();
 		safra.setEmAtividade(false);
