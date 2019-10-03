@@ -6,17 +6,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import br.edu.unoesc.model.Usuario;
-import br.edu.unoesc.repositories.UsuarioRepository;
+import br.edu.unoesc.service.UsuarioService;
 
 @Component
 public class ImplementsUserDetailsService implements UserDetailsService{
 
 	@Autowired
-	private UsuarioRepository repository;
+	private UsuarioService service;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) {
-		Usuario usuario  = repository.findByEmail(email);
+		Usuario usuario  = service.buscaPorEmail(email);
 		if(usuario == null) {
 			return null;			
 		} 
@@ -24,4 +24,3 @@ public class ImplementsUserDetailsService implements UserDetailsService{
 	}
 
 }
- 

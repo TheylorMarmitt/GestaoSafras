@@ -142,7 +142,6 @@ public class TipoSafraView extends VerticalLayout {
 				new ResponsiveStep("940px", 4));
 		
 		grid.setItems(this.tipoService.tiposAtivos());
-		grid.addColumn(TipoSafra::getCodigo).setHeader("Código");
 		grid.addColumn(TipoSafra::getNome).setHeader("Nome");
 		grid.addComponentColumn(item -> createEditButton(grid, item)).setHeader("Editar Item");
 		grid.addComponentColumn(item -> createRemoveButton(grid, item)).setHeader("Remover Item");
