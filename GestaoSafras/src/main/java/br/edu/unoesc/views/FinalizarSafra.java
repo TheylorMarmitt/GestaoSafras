@@ -82,9 +82,14 @@ public class FinalizarSafra extends VerticalLayout {
 				try {
 					Colheita colheitaSalvo = new Colheita();
 					binder.writeBean(colheitaSalvo);
-					salvar(colheitaSalvo);
-					Dialog sucesso = new DialogMensagem().finalizacaoSucedida(colheitaSalvo);
-					sucesso.open();
+					if(salvar(colheitaSalvo)) {
+						Dialog sucesso = new DialogMensagem().finalizacaoSucedida(colheitaSalvo);
+						sucesso.open();						
+					}else {
+						Dialog erro = new DialogMensagem()
+								.erroMensagem("Datas inconsistentes", "Data da colheita anterior a data de plantação");
+						erro.open();						
+					}
 					binder.readBean(null);
 				} catch (ValidationException e1) {
 					// fazer div com erros
@@ -105,8 +110,12 @@ public class FinalizarSafra extends VerticalLayout {
 		
 	}
 
-	private void salvar(Colheita colheitaSalvo) {
+	private boolean salvar(Colheita colheitaSalvo) {
+		if(colheitaSalvo.duracaoDias() < 0) {
+			return false;
+		}
 		this.colheitaService.salvar(colheitaSalvo);
+		return true;
 	}
 
 	private void criar() {
