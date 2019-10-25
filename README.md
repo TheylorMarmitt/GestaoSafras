@@ -16,5 +16,4 @@ dentre elas:
   * Ver gráficos informando produtividade e gastos em safras finalizadas;
   * Baixar gráficos esses gráficos 
 
-
-##### Disponível em 22/11/2019.
+#### Disponível em 22/11/2019.
