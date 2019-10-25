@@ -1,0 +1,68 @@
+@font-face {
+    font-family: comfortaaregular;
+    src: url(../fontes/comfortaaregular.ttf);
+}
+
+*{
+	font-family: comfortaaregular;
+}
+
+body{
+	background-color: rgb(37, 98, 30);
+	color: #fff;
+}
+
+h1{
+	width: 100%;
+	font-size: 45px;
+}
+
+.principal{
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.titulo{
+	margin-top: 150px;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding: 5px;
+}
+
+.gestao{
+	padding: 0px;
+	margin: 0px;
+}
+
+.mensagem{
+	margin-top: 20px;
+	margin-right: 0px;
+	margin-left: 0px;	
+}
+
+.sobre{
+    bottom:0;
+    width:100%;
+	margin-top: 180px;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-top: 25px;
+	padding-bottom: 20px;
+	padding-right: 0px;
+	padding-left: 0px;
+	color: rgb(37, 98, 30);
+	background-color: #fff;
+	height:180px;
+	font-size: 14px; 
+	font-weight: bold;
+}
+
+a{
+	color: green;	
+}
+
+a:hover{
+	text-decoration: none;
+	color: #000;
+}
+

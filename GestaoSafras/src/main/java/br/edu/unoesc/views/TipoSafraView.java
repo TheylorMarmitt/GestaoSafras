@@ -1,10 +1,7 @@
 package br.edu.unoesc.views;
 
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -69,22 +66,14 @@ public class TipoSafraView extends VerticalLayout {
 		binder.readBean(new TipoSafra());
 		
 		salvar.addClickListener(e ->{
-				try {
-					TipoSafra tipoSalvo = new TipoSafra();
-					binder.writeBean(tipoSalvo);
-					salvar(tipoSalvo);
-					binder.readBean(new TipoSafra());
-				} catch (ValidationException e1) {
-					// fazer div com erros
-					Dialog dialog = new DialogMensagem().erroForm();
-					dialog.add(new Html(
-						e1.getValidationErrors().stream().map(err ->
-							"<p>" + err.getErrorMessage() + "</p>")
-						.collect(Collectors.joining("\n"))
-						)
-					);
-					dialog.open();
-				}
+			try {
+				TipoSafra tipoSalvo = new TipoSafra();
+				binder.writeBean(tipoSalvo);
+				salvar(tipoSalvo);
+				binder.readBean(new TipoSafra());
+			} catch (ValidationException e1) {
+				
+			}
 		});
 		
 		novo.addClickListener(e -> {

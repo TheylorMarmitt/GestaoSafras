@@ -98,7 +98,7 @@ public class AdicionarSafra extends VerticalLayout {
 		.withValidator(new DoubleRangeValidator("O tamanho não é válido", 0.0, 9999999.0))
 		.bind("tamanho");
 		
-		binder.forField(tipoSemente).asRequired("O tipo é obrigatório").bind("tipoSemente");
+		binder.forField(tipoSemente).asRequired("A semente é obrigatória").bind("tipoSemente");
 		binder.forField(observacao).bind("observacao");
 		
 		binder.addStatusChangeListener(status ->{
@@ -118,7 +118,7 @@ public class AdicionarSafra extends VerticalLayout {
 					Dialog dialog = new DialogMensagem().erroForm();
 					dialog.add(new Html(
 						e1.getValidationErrors().stream().map(err ->
-							"<p>" + err.getErrorMessage() + "</p>")
+							"<p> • " + err.getErrorMessage() + "</p>")
 						.collect(Collectors.joining("\n"))
 						)
 					);

@@ -20,7 +20,6 @@ public class DivRecuperarSenha {
 		d.getStyle().set("border-radius", "20px");
 		d.getStyle().set("padding", "0px !important");
 		
-		
 		Text text = new Text("Informe seu e-mail de login no nosso sistema,"
 				+ " e enviaremos uma nova senha temporária para o acesso.");
 		

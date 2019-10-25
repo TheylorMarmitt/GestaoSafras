@@ -96,7 +96,7 @@ public class FinalizarSafra extends VerticalLayout {
 					Dialog dialog = new DialogMensagem().erroForm();
 					dialog.add(new Html(
 						e1.getValidationErrors().stream().map(err ->
-							"<p>" + err.getErrorMessage() + "</p>")
+							"<p> • " + err.getErrorMessage() + "</p>")
 						.collect(Collectors.joining("\n"))
 						)
 					);

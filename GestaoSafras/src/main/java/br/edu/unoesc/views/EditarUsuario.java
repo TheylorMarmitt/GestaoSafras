@@ -124,7 +124,8 @@ public class EditarUsuario extends VerticalLayout{
 					dialog.open();
 				}	
 			}else {
-				Dialog dialog = new DialogMensagem().erroForm();
+				Dialog dialog = new DialogMensagem().erroMensagem("Senhas incompatíveis", 
+						"a senha e sua confirmação devem ter o mesmo valor");
 				dialog.open();
 			}
 		});

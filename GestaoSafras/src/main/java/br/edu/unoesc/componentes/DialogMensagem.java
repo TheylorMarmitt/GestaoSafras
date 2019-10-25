@@ -43,7 +43,6 @@ public class DialogMensagem {
 			dialog.close();
 		});
 		
-		dialog.setCloseOnOutsideClick(false);
 		dialog.add(d1, d2, d3);
 		return dialog;
 		
@@ -82,7 +81,6 @@ public class DialogMensagem {
 			dialog.close();
 		});
 		
-		dialog.setCloseOnOutsideClick(false);
 		dialog.add(d1, d2, d3);
 		return dialog;
 		
@@ -121,7 +119,6 @@ public class DialogMensagem {
 			dialog.close();
 		});
 		
-		dialog.setCloseOnOutsideClick(false);
 		dialog.add(d1, d2, d3);
 		return dialog;
 	}
@@ -170,7 +167,6 @@ public class DialogMensagem {
 			dialog.close();
 		});
 		
-		dialog.setCloseOnOutsideClick(false);
 		dialog.add(d1, total, gastos, lucros, d3);
 		return dialog;
 	}
