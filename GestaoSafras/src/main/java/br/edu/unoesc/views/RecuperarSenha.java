@@ -25,7 +25,7 @@ import br.edu.unoesc.componentes.DivRecuperarSenha;
 import br.edu.unoesc.model.Usuario;
 import br.edu.unoesc.service.UsuarioService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("recuperar-senha")
 @HtmlImport("frontend://styles/tema.html")
 public class RecuperarSenha extends VerticalLayout{

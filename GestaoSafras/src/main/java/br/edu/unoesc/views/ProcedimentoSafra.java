@@ -34,7 +34,7 @@ import br.edu.unoesc.model.Safra;
 import br.edu.unoesc.service.ProcedimentoService;
 import br.edu.unoesc.service.SafraService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("procedimento")
 @HtmlImport("frontend://styles/tema.html")
 public class ProcedimentoSafra extends VerticalLayout {

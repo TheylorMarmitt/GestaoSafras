@@ -33,7 +33,7 @@ import br.edu.unoesc.model.TipoSafra;
 import br.edu.unoesc.service.SafraService;
 import br.edu.unoesc.service.TipoSafraService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("adicionar-safra")
 @HtmlImport("frontend://styles/tema.html")
 public class AdicionarSafra extends VerticalLayout {

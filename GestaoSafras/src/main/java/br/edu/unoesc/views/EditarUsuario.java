@@ -28,7 +28,7 @@ import br.edu.unoesc.model.Usuario;
 import br.edu.unoesc.security.SecurityUtils;
 import br.edu.unoesc.service.UsuarioService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("editar-usuario")
 @HtmlImport("frontend://styles/tema.html")
 public class EditarUsuario extends VerticalLayout{

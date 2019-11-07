@@ -25,7 +25,7 @@ import br.edu.unoesc.componentes.Navegacao;
 import br.edu.unoesc.model.TipoSafra;
 import br.edu.unoesc.service.TipoSafraService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("tipo-safra")
 @HtmlImport("frontend://styles/tema.html")
 public class TipoSafraView extends VerticalLayout {

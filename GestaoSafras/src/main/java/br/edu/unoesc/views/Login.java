@@ -16,15 +16,17 @@ import com.vaadin.flow.server.PWA;
 
 import java.util.Collections;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("login")
 @HtmlImport("frontend://styles/tema.html")
-@PWA(name = "Gestão de safras", shortName = "Gestão safras",
+@PWA(name = "Gestão Safras", shortName = "GestãoSafras",
 offlineResources = { "frontend/styles/style.css", 
-"frontend/styles/bootstrap.min.css", "frontend/styles/bootstrap.css", "frontend/styles/bootstrap-theme.css", "frontend/styles/bootstrap-them-min.css",
-"frontend/fontes/foundation-icons.css","frontend/fontes/foundation-icons.eot", "frontend/fontes/foundation-icons.svg",
-"frontend/fontes/foundation-icons.ttf","frontend/fontes/foundation-icons.woff", "frontend/fontes/svgs/fi-social-github.svg",
-"frontend/icons/icon.png", 
+"frontend/styles/bootstrap.min.css", "frontend/styles/bootstrap.css", 
+"frontend/styles/bootstrap-theme.css", "frontend/styles/bootstrap-them-min.css",
+"frontend/fontes/foundation-icons.css","frontend/fontes/foundation-icons.eot",
+"frontend/fontes/foundation-icons.svg",
+"frontend/fontes/foundation-icons.ttf","frontend/fontes/foundation-icons.woff",
+"frontend/fontes/svgs/fi-social-github.svg","frontend/icons/icon.png", 
 "frontend/fontes/comfortaaregular.ttf"}, themeColor = "#25621e")
 public class Login extends VerticalLayout implements BeforeEnterObserver {
 
@@ -118,11 +120,15 @@ public class Login extends VerticalLayout implements BeforeEnterObserver {
     	Div dev = new Div( new Text("Desenvolvido por: Theylor Marmitt"));
     	dev.getStyle().set("text-align", "center");
     	dev.getStyle().set("margin-top", "5px");
-    			
+    	Div icon_credit = new Div( new Text("Icon made by Freepik from www.flaticon.com"));
+    	icon_credit.getStyle().set("text-align", "center");
+    	icon_credit.getStyle().set("margin-top", "5px");
+   
     	rodape.add(tcc);
     	rodape.add(tads);
     	rodape.add(uno);
     	rodape.add(dev);
+    	rodape.add(icon_credit);
     	return rodape;
     }
 }

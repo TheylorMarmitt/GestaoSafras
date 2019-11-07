@@ -20,7 +20,7 @@ import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Colheita;
 import br.edu.unoesc.service.ColheitaService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("historico")
 @HtmlImport("frontend://styles/tema.html")
 public class Historico extends VerticalLayout {

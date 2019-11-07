@@ -19,7 +19,7 @@ import br.edu.unoesc.model.Colheita;
 import br.edu.unoesc.model.Procedimento;
 import br.edu.unoesc.service.ColheitaService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("historico-procedimentos")
 @HtmlImport("frontend://styles/tema.html")
 public class HistoricoProcedimentos extends VerticalLayout  implements HasUrlParameter<Long>{

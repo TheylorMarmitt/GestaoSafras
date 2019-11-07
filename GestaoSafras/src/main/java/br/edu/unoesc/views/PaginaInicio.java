@@ -33,7 +33,7 @@ import br.edu.unoesc.model.Colheita;
 import br.edu.unoesc.model.Procedimento;
 import br.edu.unoesc.service.ColheitaService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("inicio")
 @HtmlImport("frontend://styles/tema.html")
 public class PaginaInicio extends VerticalLayout{

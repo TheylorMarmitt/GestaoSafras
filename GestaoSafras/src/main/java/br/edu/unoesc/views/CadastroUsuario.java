@@ -29,7 +29,7 @@ import br.edu.unoesc.idioma.DataPickerPt;
 import br.edu.unoesc.model.Usuario;
 import br.edu.unoesc.service.UsuarioService;
 
-@PageTitle("Gestão de Safra")
+@PageTitle("Gestão Safras")
 @Route("cadastrar-usuario")
 @HtmlImport("frontend://styles/tema.html")
 public class CadastroUsuario extends VerticalLayout{
