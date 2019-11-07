@@ -21,12 +21,10 @@ import java.util.Collections;
 @HtmlImport("frontend://styles/tema.html")
 @PWA(name = "Gestão Safras", shortName = "GestãoSafras",
 offlineResources = { "frontend/styles/style.css", 
-"frontend/styles/bootstrap.min.css", "frontend/styles/bootstrap.css", 
-"frontend/styles/bootstrap-theme.css", "frontend/styles/bootstrap-them-min.css",
-"frontend/fontes/foundation-icons.css","frontend/fontes/foundation-icons.eot",
-"frontend/fontes/foundation-icons.svg",
-"frontend/fontes/foundation-icons.ttf","frontend/fontes/foundation-icons.woff",
-"frontend/fontes/svgs/fi-social-github.svg","frontend/icons/icon.png", 
+"frontend/styles/bootstrap.min.css", "frontend/styles/bootstrap.css", "frontend/styles/bootstrap-theme.css", "frontend/styles/bootstrap-them-min.css",
+"frontend/fontes/foundation-icons.css","frontend/fontes/foundation-icons.eot", "frontend/fontes/foundation-icons.svg",
+"frontend/fontes/foundation-icons.ttf","frontend/fontes/foundation-icons.woff", "frontend/fontes/svgs/fi-social-github.svg",
+"frontend/icons/icon.png", 
 "frontend/fontes/comfortaaregular.ttf"}, themeColor = "#25621e")
 public class Login extends VerticalLayout implements BeforeEnterObserver {
 
@@ -76,7 +74,7 @@ public class Login extends VerticalLayout implements BeforeEnterObserver {
         final LoginI18n i18n = LoginI18n.createDefault();
 
         i18n.setHeader(new LoginI18n.Header());
-        i18n.getHeader().setTitle("Gestão de Safra");
+        i18n.getHeader().setTitle("Gestão Safras");
         i18n.getHeader().setDescription("Faça a gestão das safras de sua lavoura");
         i18n.getForm().setUsername("Usuário");
         i18n.getForm().setTitle("Acesse:");
@@ -93,7 +91,7 @@ public class Login extends VerticalLayout implements BeforeEnterObserver {
     
     private Div cabecalho() {
     	Div d = new Div();
-        H2 h2 = new H2("Bem vindo ao sistema Gestão de Safras.");
+        H2 h2 = new H2("Bem vindo ao sistema Gestão Safras.");
         h2.getStyle().set("margin-top", "0px");
 		d.add(h2, new H3("Faça o login para gerir sua safra."));
 		d.getStyle().set("text-align", "center");
